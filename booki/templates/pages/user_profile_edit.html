@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+{% load booki_extras %}
+{% block title %}
+    User | Profile
+{% endblock title %}
+{% block css %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"
+          integrity="sha512-UtLOu9C7NuThQhuXXrGwx9Jb/z9zPQJctuAgNUBK3Z6kkSYT9wJ+2+dh6klS+TDBCV9kNPBbAxbVD+vCcfGPaA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+{% endblock css %}
+{% block content %}
+    <h1 class="mt-3">User Profile:</h1>
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-8">
+                {% for field in user_profile_form %}
+                    {% if field.label != 'pic' %}
+                        <div class="form-floating mb-3">
+                            {{ field }}
+                            {{ field.label_tag }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="text-center d-block mb-5"
+                       for="{{ user_profile_form.pic.auto_id }}"
+                       data-bs-toggle="tooltip"
+                       data-bs-title="Default tooltip">
+                    <img class="rounded-circle"
+                         id="avatar"
+                         src="{% get_image_or_default user_profile.pic 'img/user.png' %}"
+                         width="128"
+                         height="128"
+                         alt="avatar">
+                    {{ user_profile_form.pic }}
+                </label>
+                <button type="submit" name="update" class="btn btn-primary w-100">Update</button>
+            </div>
+        </div>
+    </form>
+    <div class="modal fade"
+         id="uploadPic"
+         tabindex="-1"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         role="dialog"
+         aria-labelledby="modalTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Crop Profile Pic</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mw-100">
+                        <img id="image"
+                             class="mw-100"
+                             alt="cropper image"
+                             height="auto"
+                             width="auto" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="crop" class="btn btn-primary">Crop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script_lib %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"
+            integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+{% endblock script_lib %}
+{% block script %}
+    <script>
+        window.onload = (event) => {
+            const avatar = document.getElementById('avatar');
+            const image = document.getElementById('image');
+            const input = document.getElementById('id_pic');
+            const modal = document.getElementById('uploadPic');
+            const bsModal = new bootstrap.Modal(modal);
+            let cropper;
+
+            input.addEventListener('change', function (e) {
+                var files = e.target.files;
+
+                var done = function (url) {
+                  input.value = '';
+                  image.src = url;
+                  bsModal.show();
+                };
+
+                var reader;
+                var file;
+                var url;
+        
+                if (files && files.length > 0) {
+                  file = files[0];
+        
+                  if (URL) {
+                    done(URL.createObjectURL(file));
+                  } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function (e) {
+                      done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }
+            });
+
+            modal.addEventListener('shown.bs.modal', function () {
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                });
+            });
+            modal.addEventListener('hidden.bs.modal', function () {
+                cropper.destroy();
+                cropper = null;
+            });
+
+            document.getElementById('crop').addEventListener('click', function () {        
+                bsModal.hide();
+                if (cropper) {
+                  canvas = cropper.getCroppedCanvas({
+                    width: 160,
+                    height: 160,
+                  });
+                  avatar.src = canvas.toDataURL();
+                  canvas.toBlob(function (blob) {
+                    const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
+                    let list = new DataTransfer();
+                    list.items.add(file); 
+                    input.files = list.files;
+                  });
+                }
+            });
+
+        }
+    </script>
+{% endblock script %}
