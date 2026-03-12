@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% load booki_extras static humanize %}
+{% block title %}
+    Book | {{ book.title|title }}
+{% endblock title %}
+{% block content %}
+    {% is_librarian as user_is_librarian %}
+    <div id="book_detail">
+        <div class="row mt-5">
+            <div class="col-md-3 text-center">
+                <img class="book-cover"
+                     src="{{ book.pic.url }}"
+                     alt="Title"
+                     height="auto"
+                     width="auto" />
+                <div class="mt-2">
+                    <small><i class="bi bi-star-fill star"></i> {{ average_rating|floatformat:1 }} ({{ total_reviews|intcomma }})</small>
+                </div>
+                {% if user.is_authenticated and not user_is_librarian %}
+                    <div class="mt-4">
+                        <button id="reserve"
+                                type="button"
+                                data-book="{{ book.slug }}"
+                                class="btn btn-outline-primary w-100">RESERVE</button>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <h1>
+                    {{ book.title|title }}
+                    <br>
+                    <small>{{ book.authors.all | combine }}</small>
+                </h1>
+                <p class="mt-2">{{ book.summary|safe }}</p>
+                <b>Category: </b> <a href="{{ book.category.get_absolute_url }}">{{ book.category | title }}</a>
+                <br>
+                {% for tag in book.tags.all %}<a href="#{{ tag }}" class="pe-1">#{{ tag }}</a>{% endfor %}
+                <br>
+                <small class="text-muted">ISBN: {{ book.isbn }}</small>
+                <hr>
+                <div class="py-4">
+                    {% for author in book.authors.all %}
+                        {% include "components/author_small_profile.html" with author=author %}
+                    {% endfor %}
+                </div>
+                <hr>
+                {% if user.is_authenticated and not user_is_librarian %}
+                    <form action="{% url 'submit_review' book_slug=book.slug %}"
+                          method="post"
+                          class="rounded border bg-light p-4">
+                        {% csrf_token %}
+                        <div class="my-3">
+                            <label class="form-label d-flex justify-content-between align-items-center">
+                                <span>
+                                    <img src="{% get_image_or_default user_profile.pic 'img/user.png' %}"
+                                         alt="{{ request.user.email }}"
+                                         width="48"
+                                         height="48"
+                                         class="rounded-circle mr-1">
+                                    Your review:
+                                </span>
+                                <div class="rating">
+                                    <input type="radio"
+                                           id="star5"
+                                           name="rate"
+                                           value="5"
+                                           {% if user_review and user_review.rate == 5 %}checked{% endif %}>
+                                    <label for="star5" title="5 stars">
+                                        <i class="bi bi-star-fill {% if user_review and user_review.rate == 5 %}star{% endif %}"></i>
+                                    </label>
+                                    <input type="radio"
+                                           id="star4"
+                                           name="rate"
+                                           value="4"
+                                           {% if user_review and user_review.rate == 4 %}checked{% endif %}>
+                                    <label for="star4" title="4 stars">
+                                        <i class="bi bi-star-fill {% if user_review and user_review.rate >= 4 %}star{% endif %}"></i>
+                                    </label>
+                                    <input type="radio"
+                                           id="star3"
+                                           name="rate"
+                                           value="3"
+                                           {% if user_review and user_review.rate == 3 %}checked{% endif %}>
+                                    <label for="star3" title="3 stars">
+                                        <i class="bi bi-star-fill {% if user_review and user_review.rate >= 3 %}star{% endif %}"></i>
+                                    </label>
+                                    <input type="radio"
+                                           id="star2"
+                                           name="rate"
+                                           value="2"
+                                           {% if user_review and user_review.rate == 2 %}checked{% endif %}>
+                                    <label for="star2" title="2 stars">
+                                        <i class="bi bi-star-fill {% if user_review and user_review.rate >= 2 %}star{% endif %}"></i>
+                                    </label>
+                                    <input type="radio"
+                                           id="star1"
+                                           name="rate"
+                                           value="1"
+                                           required
+                                           {% if user_review and user_review.rate == 1 %}checked{% endif %}>
+                                    <label for="star1" title="1 star">
+                                        <i class="bi bi-star-fill {% if user_review and user_review.rate >= 1 %}star{% endif %}"></i>
+                                    </label>
+                                </div>
+                            </label>
+                            <textarea class="form-control mt-4"
+                                      name="comment"
+                                      rows="3"
+                                      placeholder="Write your comment and review here (optional) ...">{% if user_review and user_review.comment %}{{ user_review.comment }}{% endif %}</textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary ">
+                                {% if user_review %}
+                                    Update
+                                {% else %}
+                                    Submit
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+                <div class="my-4" id="reviews_list">{% include "components/review.html" with reviews=reviews %}</div>
+                {% if total_comment > 10 %}
+                    <button id="show-more-review"
+                            data-page="2"
+                            data-book="{{ book.slug }}"
+                            class="btn btn-outline-primary w-100">Show More</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

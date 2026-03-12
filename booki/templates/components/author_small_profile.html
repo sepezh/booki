@@ -1,0 +1,11 @@
+{% load booki_extras %}
+<a class="profile d-inline-block text-center"
+   href="{{ author.get_absolute_url }}">
+    <img src="{% get_image_or_default author.pic 'img/user.png' %}"
+         alt="{{ author }}"
+         width="64"
+         height="64"
+         class="rounded-circle mb-1">
+    <br>
+    <span class="fw-light">{{ author }}</span>
+</a>

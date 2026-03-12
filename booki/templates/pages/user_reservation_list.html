@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}
+    User | Reservations
+{% endblock title %}
+{% block content %}
+    <h1 class="my-3">Reservations:</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Code</th>
+                    <th>Book</th>
+                    <th>Library</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for reservation in reservations %}
+                    <tr class="redirect"
+                        data-href="{% url 'user_reservation' code=reservation.code %}">
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td>{{ reservation.code }}</td>
+                        <td>{{ reservation.book | title }}</td>
+                        <td>{{ reservation.library | title }}</td>
+                        <td>
+                            {% if reservation.get_status_display == 'Pending' %}
+                                <span class="badge text-bg-secondary">{{ reservation.get_status_display }}</span>
+                            {% elif reservation.get_status_display == 'Rejected' or reservation.get_status_display == 'Canceled' %}
+                                <span class="badge text-bg-danger">{{ reservation.get_status_display }}</span>
+                            {% else %}
+                                <span class="badge text-bg-success">{{ reservation.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ reservation.created_at|date:"Y-m-d H:i:s" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "components/list.html" with paginator=reservations %}
+{% endblock content %}

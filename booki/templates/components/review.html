@@ -1,0 +1,24 @@
+{% load booki_extras %}
+{% for review in reviews %}
+    <div class="row mb-3 w-100 g-0">
+        <div class="col-md-1 py-2">
+            <img src="{% get_image_or_default review.user.userprofile.pic 'img/user.png' %}"
+                 alt="{{ review.user.email }}"
+                 width="48"
+                 height="48"
+                 class="rounded-circle mr-1">
+        </div>
+        <div class="col-md-11 rounded bg-light border p-2">
+            {% for i in '12345' %}
+                {% if forloop.counter <= review.rate %}<i class="bi bi-star-fill star"></i>{% endif %}
+            {% endfor %}
+            <br>
+            <br>
+            {{ review.comment }}
+        </div>
+    </div>
+{% empty %}
+    <div class="w-100 round bg-light p-2">
+        No reviews have been made for this book yet. Be the first to share your thoughts!
+    </div>
+{% endfor %}

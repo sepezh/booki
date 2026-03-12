@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}
+    Author | {{ author | title }}
+{% endblock title %}
+{% block content %}
+    <div class="py-4">
+        <h1>{{ author | title }}</h1>
+        <div class="row">
+            {% if author.pic.url %}
+                <div class="col-md-2">
+                    <img src="{{ author.pic.url }}"
+                         alt="{{ author }}"
+                         class="w-100"
+                         width="auto"
+                         height="auto">
+                </div>
+                <div class="col-md-10">
+                    <p>{{ author.summary|safe }}</p>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <p>{{ author.summary|safe }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include "components/list.html" with title="Books" books=books %}
+{% endblock content %}

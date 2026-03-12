@@ -1,0 +1,28 @@
+{% if library_book_list %}
+    <form action="{% url 'reserve' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="book" value="{{ book_slug }}">
+        {% for library_book in library_book_list %}
+            <label class="card mb-3 d-flex flex-row align-items-center"
+                   for="library-book-{{ library_book.id }}">
+                <div class="p-3">
+                    <input type="radio"
+                           name="library-book"
+                           id="library-book-{{ library_book.id }}"
+                           value="{{ library_book.id }}"
+                           {% if forloop.first %}checked{% endif %}>
+                </div>
+                <div class="card-body flex-grow-1">
+                    <h5 class="card-title">{{ library_book.library | title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Total Quantity : {{ library_book.quantity }}</h6>
+                    <p class="card-text">{{ library_book.library.get_address }}</p>
+                </div>
+            </label>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary float-end">Submit</button>
+    </form>
+{% else %}
+    <div class="card">
+        <div class="card-body">Unfortunately there is no library in your nearby for this book.</div>
+    </div>
+{% endif %}
