@@ -1,222 +1,220 @@
 * {
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 a {
-    color: #c26b6b;
-    text-decoration: none;
+  color: #c26b6b;
+  text-decoration: none;
 }
 
 a:hover {
-    color: #aa5b5b;
+  color: #aa5b5b;
 }
 
 [data-href] {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 nav.navbar a {
-    color: #c26b6b !important;
-    font-size: 24px !important;
+  color: #c26b6b !important;
+  font-size: 24px !important;
 }
 
 nav.navbar a.nav-link.active {
-    background: #e9e9e9;
+  background: #e9e9e9;
 }
 
 .filter-blur {
-    filter: blur(3px);
+  filter: blur(3px);
 }
 
 .list .title {
-    color: #c26b6b;
+  color: #c26b6b;
 }
 
 .list .book a {
-    text-decoration: none;
-    color: #000;
+  text-decoration: none;
+  color: #000;
 }
 
 .list .card,
 .list .card * {
-    border-radius: 0;
-    border: none;
+  border-radius: 0;
+  border: none;
 }
 
 .list .card .card-body {
-    padding: 10px 0px;
+  padding: 10px 0px;
 }
 
 .list .card .card-title {
-    font-size: 20px;
-    height: 50px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    /* start showing ellipsis when 3rd line is reached */
-    white-space: pre-wrap;
-    /* let the text wrap preserving spaces */
+  font-size: 20px;
+  height: 50px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap;
+  /* let the text wrap preserving spaces */
 }
 
 .list .card img {
-    height: 300px;
-    object-fit: cover;
+  height: 300px;
+  object-fit: cover;
 }
 
 .pagination .page-item .page-link {
-    color: #c26b6b;
+  color: #c26b6b;
 }
 
 .pagination .page-item.active .page-link {
-    background: #c26b6b;
-    color: #ffffff;
-    border-color: #c26b6b;
+  background: #c26b6b;
+  color: #ffffff;
+  border-color: #c26b6b;
 }
 
 .pagination .page-item:first-child .page-link {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 .pagination .page-item:last-child .page-link {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 #book_detail .book-cover {
-    object-fit: cover;
-    height: 300px;
+  object-fit: cover;
+  height: 300px;
 }
 
-h1>small {
-    font-size: 1.6rem;
-    font-weight: lighter;
+h1 > small {
+  font-size: 1.6rem;
+  font-weight: lighter;
 }
 
 .star {
-    color: #f39c12
+  color: #f39c12;
 }
 
 .rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: start;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
 }
 
 .rating input {
-    width: 1px;
-    height: 1px;
-    opacity: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
 
 .rating label {
-    font-size: 2em;
-    color: #ddd;
-    cursor: pointer;
+  font-size: 2em;
+  color: #ddd;
+  cursor: pointer;
 }
 
-.rating input:checked~label {
-    color: #f39c12;
-    /* Color for selected stars */
+.rating input:checked ~ label {
+  color: #f39c12;
+  /* Color for selected stars */
 }
 
 .rating label:hover,
-.rating label:hover~label {
-    color: #f39c12;
-    /* Color for hovered stars */
+.rating label:hover ~ label {
+  color: #f39c12;
+  /* Color for hovered stars */
 }
 
 .btn.btn-primary {
-    border-radius: 0;
-    border-color: #c26b6b;
-    background-color: #c26b6b;
+  border-radius: 0;
+  border-color: #c26b6b;
+  background-color: #c26b6b;
 }
 
 .btn.btn-primary:active,
 .btn.btn-primary:hover {
-    border-color: #c26b6b;
-    background: #aa5b5b;
+  border-color: #c26b6b;
+  background: #aa5b5b;
 }
 
 .btn.btn-primary:focus-visible {
-    border-color: #c26b6b;
-    background: #aa5b5b;
-    outline: 0;
-    box-shadow: 0px 0px 3px #613434;
+  border-color: #c26b6b;
+  background: #aa5b5b;
+  outline: 0;
+  box-shadow: 0px 0px 3px #613434;
 }
 
 .btn.btn-outline-primary {
-    border-radius: 0;
-    border-color: #c26b6b;
-    color: #c26b6b;
+  border-radius: 0;
+  border-color: #c26b6b;
+  color: #c26b6b;
 }
 
 .btn.btn-outline-primary:active,
 .btn.btn-outline-primary:hover {
-    border-color: #c26b6b;
-    color: #ffe0e0;
-    background: #aa5b5b;
+  border-color: #c26b6b;
+  color: #ffe0e0;
+  background: #aa5b5b;
 }
 
 .btn.btn-outline-primary:focus-visible {
-    border-color: #c26b6b;
-    color: #ffe0e0;
-    background: #aa5b5b;
-    outline: 0;
-    box-shadow: 0px 0px 3px #613434;
+  border-color: #c26b6b;
+  color: #ffe0e0;
+  background: #aa5b5b;
+  outline: 0;
+  box-shadow: 0px 0px 3px #613434;
 }
 
-
 .profile span {
-    font-size: 0.7rem;
+  font-size: 0.7rem;
 }
 
 .profile img {
-    object-fit: cover;
+  object-fit: cover;
 }
 
-
 .search-overlay {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    top: 0;
-    left: 0;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
 }
 
 .search-overlay #close-search-overlay {
-    top: 10px;
-    right: 10px;
+  top: 10px;
+  right: 10px;
 }
-
 
 .search-overlay #search {
-    width: 80%;
-    height: 100vh;
+  width: 80%;
+  height: 100vh;
 }
-
-
 
 .search-overlay #search input,
 .search-overlay #search input:focus,
 .search-overlay #search input:active,
 .search-overlay #search input:focus-visible {
-    background: none;
-    border: solid #bdbdbd 1px;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    color: #e5e5e5;
-    font-weight: lighter;
-    outline: none;
+  background: none;
+  border: solid #bdbdbd 1px;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  color: #e5e5e5;
+  font-weight: lighter;
+  outline: none;
 }
 
-
 #reservation img {
-    max-height: 200px !important;
+  max-height: 200px !important;
 }
 
 .gap-10 {
-    gap: 10px;
+  gap: 10px;
+}
+
+.brand-color {
+  color: #c26b6b !important;
 }

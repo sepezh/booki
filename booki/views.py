@@ -22,9 +22,11 @@ User = get_user_model()
 def home(request):
     """Home view"""
     latest = Book.objects.order_by('-created_at')[:6]
+    best = Book.objects.annotate(avg_rate=Avg('review__rate')).order_by('-avg_rate')[:6]
     return render(request, 'pages/home.html', {
         'page': 'home',
-        'latest': latest
+        'latest': latest,
+        'best': best
     })
 
 
@@ -332,6 +334,9 @@ def user_reservation_action(request, code):
     if request.method == 'POST' and 'submit' in request.POST:
         reservation = get_object_or_404(Reserve, code=code, user=request.user)
         if request.POST.get('submit') == 'cancel' and Reserve.Status(reservation.status) is reservation.Status.PENDING:
+            librarzy_book = LibraryBook.objects.get(book=reservation.book, library=reservation.library)
+            librarzy_book.quantity += 1
+            librarzy_book.save()
             reservation.status = Reserve.Status.CANCELED
             reservation.save()
 
@@ -468,9 +473,15 @@ def dashboard_reservation_action(request, code):
             reservation.status = Reserve.Status.PICKED
             reservation.save()
         elif request.POST.get('submit') == 'cancel':
+            librarzy_book = LibraryBook.objects.get(book=reservation.book, library=library)
+            librarzy_book.quantity += 1
+            librarzy_book.save()
             reservation.status = Reserve.Status.CANCELED
             reservation.save()
         elif request.POST.get('submit') == 'return':
+            librarzy_book = LibraryBook.objects.get(book=reservation.book, library=library)
+            librarzy_book.quantity += 1
+            librarzy_book.save()
             reservation.status = Reserve.Status.BACKED
             reservation.save()
 

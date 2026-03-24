@@ -6,7 +6,7 @@
 {% block content %}
     {% is_librarian as user_is_librarian %}
     <div id="book_detail">
-        <div class="row mt-5">
+        <div class="row gap-5 mt-5">
             <div class="col-md-3 text-center">
                 <img class="book-cover"
                      src="{{ book.pic.url }}"
@@ -31,7 +31,7 @@
                     <br>
                     <small>{{ book.authors.all | combine }}</small>
                 </h1>
-                <p class="col-md-9 mt-2">{{ book.summary|safe }}</p>
+                <p class="col-md-12 mt-2">{{ book.summary|safe }}</p>
                 <b>Category: </b> <a href="{{ book.category.get_absolute_url }}">{{ book.category | title }}</a>
                 <br>
                 {% for tag in book.tags.all %}<a href="#{{ tag }}" class="pe-1">#{{ tag }}</a>{% endfor %}

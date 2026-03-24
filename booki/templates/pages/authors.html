@@ -8,8 +8,9 @@
         <div class="col-12">
             <h2 class="display-6 py-5 fw-bold title d-flex justify-content-between align-items-center">Authors</h2>
         </div>
+
         {% for author in authors %}
-            <div class="col-md-2">
+            <div class="col-xs-6 col-sm-3 col-md-2 mb-4 px-4 d-flex justify-content-center">
                 {% include "components/author_small_profile.html" with author=author %}
             </div>
         {% endfor %}
