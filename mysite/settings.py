@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-e8%s7ml!!(=b$1v06ipeb)hg$^thh$%)(22a@=khb%!507c8oi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app', '.onrender.com', 'localhost', '127.0.0.1']
 
 
 # upload
