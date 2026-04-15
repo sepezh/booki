@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if env('STAGE') == 'production':
+if 'STAGE' in env and env('STAGE') == 'production':
     DATABASES = {
         'default': dj_database_url.config(
             default=env('DATABASE_URL')
