@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e8%s7ml!!(=b$1v06ipeb)hg$^thh$%)(22a@=khb%!507c8oi'
+SECRET_KEY = env('SECRET_KEY', default='your-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['.vercel.app', '.onrender.com', 'localhost', '127.0.0.1']
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,16 @@ else :
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
+
+if 'STORAGE' in env and env('STORAGE') == 's3':
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
+    AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default=None)
+    AWS_S3_SIGNATURE_VERSION = env('AWS_S3_SIGNATURE_VERSION', default='s3v4')
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Password validation
