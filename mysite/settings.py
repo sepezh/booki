@@ -16,10 +16,12 @@ import environ
 import dj_database_url
 
 env = environ.Env()
-environ.Env.read_env()  # Read .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(BASE_DIR / '.env')  # Read .env file
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -101,8 +103,9 @@ else :
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
+print(f'STORAGE: {env("STORAGE", default="local")}')
 if 'STORAGE' in env and env('STORAGE') == 's3':
+    print("Using S3 for media storage")
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
