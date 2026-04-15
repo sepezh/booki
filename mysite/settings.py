@@ -102,8 +102,9 @@ else :
         }
     }
 
-
+print(f"Storage backend: {'S3' if 'STORAGE' in env and env('STORAGE') == 's3' else 'local'}")
 if 'STORAGE' in env and env('STORAGE') == 's3':
+    print("Using S3 for media storage")
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
