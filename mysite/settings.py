@@ -78,13 +78,16 @@ if env('STORAGE', default='') == 's3':
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
+    # Public URL for serving files (r2.dev subdomain or your custom domain)
+    AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')  # pub-xxx.r2.dev OR media.yourdomain.com
+    
     AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='auto')  # 'auto' required for Cloudflare R2
     AWS_S3_SIGNATURE_VERSION = env('AWS_S3_SIGNATURE_VERSION', default='s3v4')
     AWS_DEFAULT_ACL = None          # R2 does not support ACLs
     AWS_S3_FILE_OVERWRITE = False   # safer: keeps originals if same filename uploaded
     AWS_QUERYSTRING_AUTH = False    # public URLs without signed params (remove if you want private files)
 
-    MEDIA_URL = f"{env('AWS_S3_PUBLIC_URL')}/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     MEDIA_ROOT = ''
 
     STORAGES = {
