@@ -84,7 +84,7 @@ if env('STORAGE', default='') == 's3':
     AWS_S3_FILE_OVERWRITE = False   # safer: keeps originals if same filename uploaded
     AWS_QUERYSTRING_AUTH = False    # public URLs without signed params (remove if you want private files)
 
-    MEDIA_URL = f"{env('AWS_S3_ENDPOINT_URL')}/{env('AWS_STORAGE_BUCKET_NAME')}/"
+    MEDIA_URL = f"{env('AWS_S3_PUBLIC_URL')}/"
     MEDIA_ROOT = ''
 
     STORAGES = {
